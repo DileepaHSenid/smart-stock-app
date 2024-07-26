@@ -116,7 +116,7 @@ class _GetStartedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 100.0, // Adjust based on your layout needs
+      bottom: 100.0,
       left: 50.0,
       right: 50.0,
       child: Center(
