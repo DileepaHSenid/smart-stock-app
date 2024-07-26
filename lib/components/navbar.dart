@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/itemadd/additems.dart';
+import 'package:project/ui/products/products.dart';
+import 'package:project/ui/suppliers/suppliers.dart';
+import '../ui/dashboard/dashboard.dart';
 
 class NavigationMenu extends StatelessWidget {
   const NavigationMenu({super.key});
@@ -10,31 +14,52 @@ class NavigationMenu extends StatelessWidget {
 
     return Scaffold(
       bottomNavigationBar: Obx(
-        () => NavigationBar(
-          height: 80.0,
-          elevation: 0.0,
-          selectedIndex: controller.selectedIndex.value,
-          onDestinationSelected: (index) => controller.selectedIndex.value = index,
-          destinations: const [
-            NavigationDestination(
-                icon: Icon(Icons.rocket_launch), 
-                label: 'Dashboard'),
-            NavigationDestination(
-              icon: Icon(Icons.shopping_cart),
-              label: 'Products',
+            () => Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: const Border(
+              top: BorderSide(
+                color: Colors.black26,
+                width: 1.0,
+              ),
             ),
-            NavigationDestination(
-              icon: Icon(Icons.people),
-              label: 'Suppliers',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.add_circle),
-              label: 'Add',
-            ),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(0, -2),
+              ),
+            ],
+          ),
+          child: NavigationBar(
+            backgroundColor: const Color(0xFFFFFFFF),
+            height: 80.0,
+            elevation: 0.0,
+            selectedIndex: controller.selectedIndex.value,
+            onDestinationSelected: (index) => controller.selectedIndex.value = index,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.rocket_launch),
+                label: 'Dashboard',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.shopping_cart),
+                label: 'Products',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.people),
+                label: 'Suppliers',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.add_circle),
+                label: 'Add',
+              ),
+            ],
+          ),
         ),
       ),
-      body:  Obx(()=> controller.screens[controller.selectedIndex.value]),
+      body: Obx(() => controller.screens[controller.selectedIndex.value]),
     );
   }
 }
@@ -43,9 +68,9 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
 
   final screens = [
-    Container(color: Colors.green),
-    Container(color: Colors.blue),
-    Container(color: Colors.red),
-    Container(color: Colors.yellow)
+    const Dashboard(),
+    const Products(),
+    const Suppliers(),
+    const AddItems(),
   ];
 }
