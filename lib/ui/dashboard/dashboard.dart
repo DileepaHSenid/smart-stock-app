@@ -178,10 +178,10 @@ class _DashboardState extends State<Dashboard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: List.generate(
-                        3, // Number of items in the carousel
+                        3,
                             (index) => Container(
-                          width: 8.0,
-                          height: 8.0,
+                          width: 10.0,
+                          height: 10.0,
                           margin: const EdgeInsets.symmetric(horizontal: 4.0),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
