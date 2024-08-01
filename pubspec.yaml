@@ -17,9 +17,12 @@ dependencies:
   flutter_cache_manager: ^3.3.3
   syncfusion_flutter_charts: ^26.2.4
   fl_chart: ^0.68.0
+  delightful_toast: ^1.1.0
+  get: ^4.6.6
+  http: ^1.2.2
+  shared_preferences: ^2.2.3
 
 dev_dependencies:
-  get: ^4.6.6
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.0
@@ -35,6 +38,9 @@ flutter:
     - assets/images/navigator1.png
     - assets/images/navigator2.png
     - assets/images/navigator3.png
+    - assets/images/add-product.png
+    - assets/images/supply.png
+    - assets/images/user-add.png
   fonts:
     - family: JetBrainsMono
       fonts:

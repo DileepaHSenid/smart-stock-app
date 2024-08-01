@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       home: const Welcome(),
       debugShowCheckedModeBanner: false,
       routes: {
-        '/nabvbar': (context) => const NavigationMenu(),
+        '/navbar': (context) => const NavigationMenu(),
         '/login': (context) => const Login(),
         '/dashboard': (context) => const Dashboard(),
         '/profile': (context) => const Profile(),
