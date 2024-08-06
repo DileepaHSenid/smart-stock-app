@@ -207,4 +207,40 @@ class SuppliersController {
       rethrow;
     }
   }
+
+  Future<bool> updateSupplier(Map<String, dynamic> supplier) async {
+    final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.updateSupplier}/${supplier['id']}';
+    print('Making PUT request to $url');  // Debugging statement
+    try {
+      final response = await http.put(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(supplier),
+      );
+      print('Response status: ${response.statusCode}');  // Debugging statement
+      print('Response body: ${response.body}');  // Debugging statement
+
+      if (response.statusCode == 200) {
+        // Handle a successful response
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        status = responseBody['status'];
+        message = responseBody['message'];
+
+        if (status == 'S0000') {
+          return true;
+        } else {
+          throw Exception('Failed to update supplier: $message');
+        }
+      } else if (response.statusCode == 403) {
+        throw Exception('Forbidden: You do not have permission to update this supplier.');
+      } else {
+        throw Exception('Failed to update supplier: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error updating supplier: $e');  // Debugging statement
+      rethrow;
+    }
+  }
 }
