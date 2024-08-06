@@ -24,6 +24,7 @@ class Suppliers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: Colors.white,
       appBar: CustomAppBar(title: 'Suppliers'),
       body: SuppliersPage(),
     );
@@ -67,7 +68,8 @@ class _SuppliersPageState extends State<SuppliersPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      color: Colors.white,
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
@@ -112,33 +114,32 @@ class _SuppliersPageState extends State<SuppliersPage> {
           isLoading
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
-                  child: ListView.builder(
-                    itemCount: suppliers.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: ListTile(
-                          leading: const CircleAvatar(
-                            child: Icon(Icons.person),
-                          ),
-                          title: Text(
-                              '${suppliers[index]['firstName']} ${suppliers[index]['lastName']}'),
-                          subtitle: Text('phone: ${suppliers[index]['phone']}\n'
-                                          'id: ${suppliers[index]['id']}'),
-                          trailing: const Icon(Icons.arrow_forward),
-                          onTap: () {
-                            // Navigate to supplier details
-                          },
-                        ),
-                      );
+            child: ListView.builder(
+              itemCount: suppliers.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                      child: Icon(Icons.person),
+                    ),
+                    title: Text(
+                        '${suppliers[index]['firstName']} ${suppliers[index]['lastName']}'),
+                    subtitle: Text(
+                        'Phone: ${suppliers[index]['phone']}\nEmail: ${suppliers[index]['email']}'),
+                    trailing: const Icon(Icons.arrow_forward),
+                    onTap: () {
+                      // Navigate to supplier details
                     },
                   ),
-                ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );
   }
 }
-

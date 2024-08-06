@@ -2,12 +2,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:project/utils/api_endpoints.dart';
 
-class SuppliersController {
+class ProductController {
   String? status;
   String? message;
 
-  Future<List<Map<String, dynamic>>> fetchSuppliers() async {
-    final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.getSuppliers}';
+  Future<List<Map<String, dynamic>>> fetchProducts() async {
+    final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.getProducts}';
     print('Making request to $url');
     try {
       final response = await http.get(
@@ -26,15 +26,17 @@ class SuppliersController {
       final List<dynamic> payload = responseBody['payload'];
 
       if (status == 'S0000' && response.statusCode == 200) {
-        return List<Map<String, dynamic>>.from(payload.map((supplier) => {
-              'id': supplier['id'],
-              'firstName': supplier['firstName'],
-              'lastName': supplier['lastName'],
-              'contactPerson': supplier['contactPerson'],
-              'email': supplier['email'],
-              'phone': supplier['phone'],
-              'address': supplier['address'],
-            }));
+        return List<Map<String, dynamic>>.from(payload.map((product) => {
+          'id': product['id'],
+          'name': product['name'],
+          'status': product['Status'],
+          'ShippingId': product['ShippingId'],
+          'description': product['description'],
+          'price': product['price'],
+          'stockQuantity': product['stockQuantity'],
+          'categoryId': product['categoryId'],
+          'supplierId': product['supplierId'],
+        }));
       } else {
         throw Exception('Failed to load suppliers: $message');
       }

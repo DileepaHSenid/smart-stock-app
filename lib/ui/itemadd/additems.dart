@@ -18,24 +18,25 @@ class AddItems extends StatelessWidget {
               child: ListView(
                 padding: const EdgeInsets.all(16.0),
                 children: const [
-                  CardToAdd(
-                      text: "Add Users to the System",
-                      title: "Add User",
-                      imageLink: "assets/images/navigator3.png",
-                      navigationLink: "navlink"
-                  ),
+
                   CardToAdd(
                       text: "Add products Which are new to the system",
                       title: "Add Products",
-                      imageLink: "assets/images/navigator3.png",
+                      imageLink: "assets/images/product-add.png",
                       navigationLink: "navlink"
                   ),
                   CardToAdd(
                       text: "Add Suppliers who are Supplying products",
                       title: "Add Suppliers",
-                      imageLink: "assets/images/navigator3.png",
+                      imageLink: "assets/images/supplier-add.png",
                       navigationLink: "navlink"
                   ),
+                  CardToAdd(
+                      text: "Add Users to the System",
+                      title: "Add User",
+                      imageLink: "assets/images/user-add.png",
+                      navigationLink: "navlink"
+                  )
                 ],
               ),
             ),

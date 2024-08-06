@@ -41,6 +41,8 @@ flutter:
     - assets/images/add-product.png
     - assets/images/supply.png
     - assets/images/user-add.png
+    - assets/images/product-add.png
+    - assets/images/supplier-add.png
   fonts:
     - family: JetBrainsMono
       fonts:
