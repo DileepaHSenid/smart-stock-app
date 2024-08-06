@@ -6,4 +6,6 @@ class ApiEndpoints {
 class _AuthEndpoints {
   final String loginEmail = '/signin';
   final String getSuppliers = '/suppliers';
+  final String postSuppliers = '/suppliers';
+  final String deleteSupplier = '/suppliers';
 }
