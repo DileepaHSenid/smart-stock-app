@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project/components/appbar.dart';
 import 'package:project/controllers/supplier_controller.dart';
 import 'package:project/ui/suppliers/addsupplier.dart';
-import 'package:project/ui/suppliers/editsupplier.dart';
 
 void main() {
   runApp(const MyApp());
@@ -103,51 +102,6 @@ class _SuppliersPageState extends State<SuppliersPage> {
     }
   }
 
-  // void _showSupplierDetails(Map<String, dynamic> supplier) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(20),
-  //         ),
-  //         title: Text('${supplier['firstName']} ${supplier['lastName']}'),
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             _buildDetailRow('Contact Person:', supplier['contactPerson']),
-  //             _buildDetailRow('Email:', supplier['email']),
-  //             _buildDetailRow('Phone:', supplier['phone']),
-  //             _buildDetailRow('Address:', supplier['address']),
-  //           ],
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () {
-  //               // Implement the edit functionality here
-  //             },
-  //             child: const Text('Edit'),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //               _showDeleteConfirmationDialog(supplier['id']);
-  //             },
-  //             child: const Text('Delete'),
-  //           ),
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: const Text('Close'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   void _showSupplierDetails(Map<String, dynamic> supplier) {
     showDialog(
       context: context,
@@ -170,23 +124,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditSupplierPage(supplier: supplier),
-                  ),
-                ).then((updatedSupplier) {
-                  if (updatedSupplier != null) {
-                    setState(() {
-                      final index = suppliers.indexWhere((s) => s['id'] == updatedSupplier['id']);
-                      if (index != -1) {
-                        suppliers[index] = updatedSupplier;
-                        filterSuppliers(searchController.text); // update the filtered list as well
-                      }
-                    });
-                  }
-                });
+                // Implement the edit functionality here
               },
               child: const Text('Edit'),
             ),
@@ -195,8 +133,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 Navigator.of(context).pop();
                 _showDeleteConfirmationDialog(supplier['id']);
               },
-              child: const Text(
-                'Delete',
+              child: const Text('Delete',
                 style: TextStyle(
                   color: Colors.red,
                 ),

@@ -32,14 +32,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            size: 35,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20.0), // Adjust the padding value as needed
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              size: 25,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          onPressed: () {
-            // Handle toggle menu action
-          },
         ),
         title: Row(
           children: [
