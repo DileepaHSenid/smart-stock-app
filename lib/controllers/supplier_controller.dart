@@ -8,7 +8,7 @@ class SuppliersController {
 
   Future<List<Map<String, dynamic>>> fetchSuppliers() async {
     final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.getSuppliers}';
-    print('Making request to $url');
+    print('Making request to $url');  // Debugging statement
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -16,8 +16,8 @@ class SuppliersController {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Response status: ${response.statusCode}');  // Debugging statement
+      print('Response body: ${response.body}');  // Debugging statement
 
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
@@ -39,7 +39,42 @@ class SuppliersController {
         throw Exception('Failed to load suppliers: $message');
       }
     } catch (e) {
-      print('Error: $e');
+      print('Error: $e');  // Debugging statement
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteSupplier(String supplierId) async {
+    final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.deleteSupplier}/$supplierId';
+    print('Making DELETE request to $url');  // Debugging statement
+    try {
+      final response = await http.delete(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+      print('Response status: ${response.statusCode}');  // Debugging statement
+      print('Response body: ${response.body}');  // Debugging statement
+
+      if (response.statusCode == 200) {
+        // Handle a successful response
+        final Map<String, dynamic> responseBody = jsonDecode(response.body);
+        status = responseBody['status'];
+        message = responseBody['message'];
+
+        if (status == 'S0000') {
+          return true;
+        } else {
+          throw Exception('Failed to delete supplier: $message');
+        }
+      } else if (response.statusCode == 403) {
+        throw Exception('Forbidden: You do not have permission to delete this supplier.');
+      } else {
+        throw Exception('Failed to delete supplier: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error deleting supplier: $e');  // Debugging statement
       rethrow;
     }
   }
