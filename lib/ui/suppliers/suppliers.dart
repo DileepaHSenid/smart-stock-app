@@ -3,10 +3,6 @@ import 'package:project/components/appbar.dart';
 import 'package:project/controllers/supplier_controller.dart';
 import 'package:project/ui/suppliers/addsupplier.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
