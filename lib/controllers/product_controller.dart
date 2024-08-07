@@ -45,4 +45,6 @@ class ProductController {
       rethrow;
     }
   }
+
+  deleteProduct(String productId) {}
 }
