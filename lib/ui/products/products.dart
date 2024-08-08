@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project/components/appbar.dart';
 import '../../controllers/product_controller.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -110,72 +106,104 @@ class _ProductsPageState extends State<ProductsPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: Text('${product['name']}'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          title: Column(
             children: [
-              _buildDetailRow('Price:', '\$${product['price']}'),
-              _buildDetailRow('Category:', product['categoryId']),
-              _buildDetailRow('description:', product['description']),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Implement the edit functionality here
-              },
-              child: const Text('Edit'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showDeleteConfirmationDialog(product['id']);
-              },
-              child: const Text(
-                'Delete',
-                style: TextStyle(
+              Container(
+                decoration: const BoxDecoration(
                   color: Colors.red,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
+                  ),
+                ),
+                padding: const EdgeInsets.all(8),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    icon: const Icon(Icons.close),
+                    color: Colors.white,
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
               ),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showDeleteConfirmationDialog(String productId) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 16.0,
+                    horizontal: 16.0
+                ),
+                child: Center(
+                  child: Text(
+                    '${product['name']}',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-          title: const Text('Delete Product'),
-          content: const Text('Are you sure you want to permanently delete this product?'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                deleteProduct(productId);
-              },
-              child: const Text('Yes'),
+          content: SizedBox(
+            width: 450,
+            height: 250,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildDetailRow('Price', '\$${product['price']}'),
+                  _buildDetailRow('Quantity', '${product['stockQuantity']}'),
+                  _buildDetailRow('Category', '${product['categoryId']}'),
+                  _buildDetailRow('Description', '${product['description']}'),
+                  _buildDetailRow('Supplier', '${product['supplierId']}'),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          // Implement the edit functionality here
+                        },
+                        icon: const Icon(Icons.edit),
+                        label: const Text('Edit',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          iconColor: Colors.white,
+                        ),
+                      ),
+                      ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          print(product['id']);
+                          print(product['categoryId']);
+                          _showDeleteConfirmationDialog(context, product['id'], product['name']);
+                        },
+                        icon: const Icon(Icons.delete),
+                        label: const Text('Delete',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.redAccent,
+                          iconColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('No'),
-            ),
-          ],
+          ),
         );
       },
     );
@@ -185,26 +213,68 @@ class _ProductsPageState extends State<ProductsPage> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            '$label ',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
+          Container(
+            margin: const EdgeInsets.only(left: 25.0),
+            width: 120,
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-          Flexible(
+          Expanded(
             child: Text(
-              value,
-              style: TextStyle(
-                color: Colors.grey[600],
-              ),
+              ': $value',
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
       ),
     );
   }
+
+  void _showDeleteConfirmationDialog(BuildContext context, String productId, String productName) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text('Delete Product'),
+          content: Text('Are you sure you want to permanently delete the product "$productName"?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                deleteProduct(productId);
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.green,
+              ),
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.red,
+              ),
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -233,6 +303,7 @@ class _ProductsPageState extends State<ProductsPage> {
             controller: searchController,
             decoration: InputDecoration(
               labelText: 'Search',
+              hintText: 'Search by name',
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(30),
@@ -247,18 +318,30 @@ class _ProductsPageState extends State<ProductsPage> {
               itemCount: filteredProducts.length,
               itemBuilder: (context, index) {
                 return Card(
-                  color: const Color(0x80E7D1FF),
+                  color: Colors.white,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                    borderRadius: BorderRadius.circular(35),
+                    side: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
                   ),
+                  elevation: 5,
+                  shadowColor: Colors.black.withOpacity(0.7),
                   child: ListTile(
                     leading: const CircleAvatar(
-                      child: Icon(Icons.shopping_bag),
+                      backgroundColor: Colors.blueAccent,
+                      child: Icon(Icons.shopping_bag, color: Colors.white),
                     ),
-                    title: Text(filteredProducts[index]['name']),
+                    title: Text(
+                      filteredProducts[index]['name'],
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
                     subtitle: Text(
-                        'Price: \$${filteredProducts[index]['price']}\nCategory: ${filteredProducts[index]['categoryId']}'),
-                    trailing: const Icon(Icons.arrow_forward),
+                      'Price: \$${filteredProducts[index]['price']}\nCategory: ${filteredProducts[index]['categoryId']}',
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                    trailing: const Icon(Icons.arrow_forward, color: Colors.grey),
                     onTap: () => _showProductDetails(filteredProducts[index]),
                   ),
                 );
