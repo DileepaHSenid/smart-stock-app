@@ -4,14 +4,14 @@ class CardToAdd extends StatelessWidget {
   final String text;
   final String title;
   final String imageLink;
-  final String navigationLink;
+  final VoidCallback navigationCallback;
 
   const CardToAdd({
     super.key,
     required this.text,
     required this.title,
     required this.imageLink,
-    required this.navigationLink,
+    required this.navigationCallback,
   });
 
   @override
@@ -62,9 +62,7 @@ class CardToAdd extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
-              onPressed: () {
-                // OnPressed logic here
-              },
+              onPressed: navigationCallback,
               child: const Icon(Icons.add, color: Colors.white),
             ),
           ],
