@@ -24,8 +24,8 @@ class _EditSupplierPageState extends State<EditSupplierPage> {
   @override
   void initState() {
     super.initState();
-    _firstNameController = TextEditingController(text: widget.supplier['firstName']);
-    _lastNameController = TextEditingController(text: widget.supplier['lastName']);
+    _firstNameController = TextEditingController(text: widget.supplier['FirstName']);
+    _lastNameController = TextEditingController(text: widget.supplier['LastName']);
     _contactPersonController = TextEditingController(text: widget.supplier['contactPerson']);
     _emailController = TextEditingController(text: widget.supplier['email']);
     _phoneController = TextEditingController(text: widget.supplier['phone']);
@@ -47,8 +47,8 @@ class _EditSupplierPageState extends State<EditSupplierPage> {
     if (_formKey.currentState!.validate()) {
       final updatedSupplier = {
         'id': widget.supplier['id'],
-        'firstName': _firstNameController.text,
-        'lastName': _lastNameController.text,
+        'FirstName': _firstNameController.text,
+        'LastName': _lastNameController.text,
         'contactPerson': _contactPersonController.text,
         'email': _emailController.text,
         'phone': _phoneController.text,

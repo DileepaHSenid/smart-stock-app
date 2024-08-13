@@ -28,8 +28,8 @@ class SuppliersController {
       if (status == 'S0000' && response.statusCode == 200) {
         return List<Map<String, dynamic>>.from(payload.map((supplier) => {
               'id': supplier['id'],
-              'firstName': supplier['firstName'],
-              'lastName': supplier['lastName'],
+              'FirstName': supplier['FirstName'],
+              'LastName': supplier['LastName'],
               'contactPerson': supplier['contactPerson'],
               'email': supplier['email'],
               'phone': supplier['phone'],

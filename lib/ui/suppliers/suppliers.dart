@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/components/appbar.dart';
 import 'package:project/controllers/supplier_controller.dart';
 import 'package:project/ui/suppliers/addsupplier.dart';
+import 'package:project/ui/suppliers/editsupplier.dart';
 
 void main() {
   runApp(const MyApp());
@@ -69,7 +70,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
 
   void filterSuppliers(String query) {
     final filtered = suppliers.where((supplier) {
-      final name = '${supplier['firstName']} ${supplier['lastName']}'.toLowerCase();
+      final name = '${supplier['FirstName']} ${supplier['LastName']}'.toLowerCase();
       return name.contains(query.toLowerCase());
     }).toList();
 
@@ -110,7 +111,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: Text('${supplier['firstName']} ${supplier['lastName']}'),
+          title: Text('${supplier['FirstName']} ${supplier['LastName']}'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +125,23 @@ class _SuppliersPageState extends State<SuppliersPage> {
           actions: [
             TextButton(
               onPressed: () {
-                // Implement the edit functionality here
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditSupplierPage(supplier: supplier),
+                  ),
+                ).then((updatedSupplier) {
+                  if (updatedSupplier != null) {
+                    setState(() {
+                      final index = suppliers.indexWhere((s) => s['id'] == updatedSupplier['id']);
+                      if (index != -1) {
+                        suppliers[index] = updatedSupplier;
+                        filterSuppliers(searchController.text); // update the filtered list as well
+                      }
+                    });
+                  }
+                });
               },
               child: const Text('Edit'),
             ),
@@ -133,7 +150,8 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 Navigator.of(context).pop();
                 _showDeleteConfirmationDialog(supplier['id']);
               },
-              child: const Text('Delete',
+              child: const Text(
+                'Delete',
                 style: TextStyle(
                   color: Colors.red,
                 ),
@@ -255,7 +273,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
                             child: Icon(Icons.person),
                           ),
                           title: Text(
-                              '${filteredSuppliers[index]['firstName']} ${filteredSuppliers[index]['lastName']}'),
+                              '${filteredSuppliers[index]['FirstName']} ${filteredSuppliers[index]['LastName']}'),
                           subtitle: Text('Phone: ${filteredSuppliers[index]['phone']}\n'
                               '${filteredSuppliers[index]['email']}'),
                           trailing: const Icon(Icons.arrow_forward),
