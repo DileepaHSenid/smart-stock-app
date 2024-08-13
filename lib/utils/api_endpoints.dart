@@ -1,5 +1,5 @@
 class ApiEndpoints {
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = 'http://localhost:8080';
   static _AuthEndpoints authEndpoints = _AuthEndpoints();
 }
 
@@ -11,4 +11,5 @@ class _AuthEndpoints {
   final String updateSupplier = '/suppliers';
   final String addUser = '/users';
   final String createUser = '/signup'; 
+  final String getProducts = '/products';
 }

@@ -4,10 +4,6 @@ import 'package:project/controllers/supplier_controller.dart';
 import 'package:project/ui/suppliers/addsupplier.dart';
 import 'package:project/ui/suppliers/editsupplier.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
