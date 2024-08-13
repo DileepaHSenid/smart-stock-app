@@ -49,8 +49,8 @@ class _AddSupplierPageState extends State<AddSupplierPage> {
     if (_formKey.currentState!.validate()) {
       // Create the supplier data map
       final supplierData = {
-        'firstName': _firstNameController.text,
-        'lastName': _lastNameController.text,
+        'FirstName': _firstNameController.text,
+        'LastName': _lastNameController.text,
         'contactPerson': _contactPersonController.text,
         'phone': _phoneController.text,
         'email': _emailController.text,

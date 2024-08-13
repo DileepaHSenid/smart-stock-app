@@ -8,5 +8,8 @@ class _AuthEndpoints {
   final String getSuppliers = '/suppliers';
   final String postSuppliers = '/suppliers';
   final String deleteSupplier = '/suppliers';
+  final String updateSupplier = '/suppliers';
+  final String addUser = '/users';
+  final String createUser = '/signup'; 
   final String getProducts = '/products';
 }
