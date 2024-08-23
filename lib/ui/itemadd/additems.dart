@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/ui/products/addProducts.dart';
 import 'package:project/ui/suppliers/addsupplier.dart';
-import 'package:project/ui/users/adduser.dart';  // Import the new AddUserPage
+import 'package:project/ui/users/adduser.dart';  
 import 'package:project/components/appbar.dart';
 import 'card-add.dart';
 
@@ -27,7 +28,7 @@ class AddItems extends StatelessWidget {
                     navigationCallback: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>  AddUserPage()),
+                        MaterialPageRoute(builder: (context) => AddUserPage()),
                       );
                     },
                   ),
@@ -36,7 +37,10 @@ class AddItems extends StatelessWidget {
                     title: "Add Products",
                     imageLink: "assets/images/navigator3.png",
                     navigationCallback: () {
-                      // Navigate to the Add Products page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddProductPage()),
+                      );
                     },
                   ),
                   CardToAdd(
@@ -50,12 +54,6 @@ class AddItems extends StatelessWidget {
                       );
                     },
                   ),
-                  CardToAdd(
-                      text: "Add Users to the System",
-                      title: "Add User",
-                      imageLink: "assets/images/user-add.png",
-                      navigationLink: "navlink"
-                  )
                 ],
               ),
             ),

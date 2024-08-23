@@ -8,7 +8,7 @@ class SuppliersController {
 
   Future<List<Map<String, dynamic>>> fetchSuppliers() async {
     final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.getSuppliers}';
-    print('Making request to $url');  // Debugging statement
+    print('Making request to $url');  
     try {
       final response = await http.get(
         Uri.parse(url),
@@ -16,8 +16,8 @@ class SuppliersController {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('Response status: ${response.statusCode}');  // Debugging statement
-      print('Response body: ${response.body}');  // Debugging statement
+      print('Response status: ${response.statusCode}'); 
+      print('Response body: ${response.body}'); 
 
       final Map<String, dynamic> responseBody = jsonDecode(response.body);
 
@@ -39,14 +39,14 @@ class SuppliersController {
         throw Exception('Failed to load suppliers: $message');
       }
     } catch (e) {
-      print('Error: $e');  // Debugging statement
+      print('Error: $e'); 
       rethrow;
     }
   }
 
   Future<bool> deleteSupplier(String supplierId) async {
     final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.deleteSupplier}/$supplierId';
-    print('Making DELETE request to $url');  // Debugging statement
+    print('Making DELETE request to $url'); 
     try {
       final response = await http.delete(
         Uri.parse(url),
@@ -54,11 +54,9 @@ class SuppliersController {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print('Response status: ${response.statusCode}');  // Debugging statement
-      print('Response body: ${response.body}');  // Debugging statement
-
+      print('Response status: ${response.statusCode}');  
+      print('Response body: ${response.body}'); 
       if (response.statusCode == 200) {
-        // Handle a successful response
         final Map<String, dynamic> responseBody = jsonDecode(response.body);
         status = responseBody['status'];
         message = responseBody['message'];
@@ -74,14 +72,14 @@ class SuppliersController {
         throw Exception('Failed to delete supplier: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error deleting supplier: $e');  // Debugging statement
+      print('Error deleting supplier: $e');  
       rethrow;
     }
   }
 
   Future<bool> updateSupplier(Map<String, dynamic> supplier) async {
     final url = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.updateSupplier}/${supplier['id']}';
-    print('Making PUT request to $url');  // Debugging statement
+    print('Making PUT request to $url'); 
     try {
       final response = await http.put(
         Uri.parse(url),
@@ -90,11 +88,10 @@ class SuppliersController {
         },
         body: jsonEncode(supplier),
       );
-      print('Response status: ${response.statusCode}');  // Debugging statement
-      print('Response body: ${response.body}');  // Debugging statement
+      print('Response status: ${response.statusCode}');  
+      print('Response body: ${response.body}');  
 
       if (response.statusCode == 200) {
-        // Handle a successful response
         final Map<String, dynamic> responseBody = jsonDecode(response.body);
         status = responseBody['status'];
         message = responseBody['message'];
@@ -110,7 +107,7 @@ class SuppliersController {
         throw Exception('Failed to update supplier: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error updating supplier: $e');  // Debugging statement
+      print('Error updating supplier: $e'); 
       rethrow;
     }
   }

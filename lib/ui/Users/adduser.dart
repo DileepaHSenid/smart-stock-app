@@ -11,7 +11,7 @@ class AddUserPage extends StatefulWidget {
 class _AddUserPageState extends State<AddUserPage> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  String _role = 'ADMIN'; // Default role
+  String _role = 'ADMIN';
   final AddUserController _controller = AddUserController(baseUrl: 'http://10.0.2.2:8080');
 
   void _signUpUser() {
