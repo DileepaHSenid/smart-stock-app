@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project/ui/products/addProducts.dart';
+import 'package:project/ui/suppliers/addsupplier.dart';
+import 'package:project/ui/users/adduser.dart';  
 import 'package:project/components/appbar.dart';
 import 'card-add.dart';
 
@@ -17,26 +20,40 @@ class AddItems extends StatelessWidget {
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16.0),
-                children: const [
-
+                children: [
                   CardToAdd(
-                      text: "Add products Which are new to the system",
-                      title: "Add Products",
-                      imageLink: "assets/images/product-add.png",
-                      navigationLink: "navlink"
+                    text: "Add Users to the System",
+                    title: "Add User",
+                    imageLink: "assets/images/navigator3.png",
+                    navigationCallback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddUserPage()),
+                      );
+                    },
                   ),
                   CardToAdd(
-                      text: "Add Suppliers who are Supplying products",
-                      title: "Add Suppliers",
-                      imageLink: "assets/images/supplier-add.png",
-                      navigationLink: "navlink"
+                    text: "Add products Which are new to the system",
+                    title: "Add Products",
+                    imageLink: "assets/images/navigator3.png",
+                    navigationCallback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AddProductPage()),
+                      );
+                    },
                   ),
                   CardToAdd(
-                      text: "Add Users to the System",
-                      title: "Add User",
-                      imageLink: "assets/images/user-add.png",
-                      navigationLink: "navlink"
-                  )
+                    text: "Add Suppliers who are Supplying products",
+                    title: "Add Suppliers",
+                    imageLink: "assets/images/navigator3.png",
+                    navigationCallback: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AddSupplierPage()),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

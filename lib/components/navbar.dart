@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:project/ui/Users/users.dart';
 import 'package:project/ui/itemadd/additems.dart';
 import 'package:project/ui/products/products.dart';
 import 'package:project/ui/suppliers/suppliers.dart';
@@ -52,6 +53,10 @@ class NavigationMenu extends StatelessWidget {
                 label: 'Suppliers',
               ),
               NavigationDestination(
+                icon: Icon(Icons.supervised_user_circle_sharp),
+                label: 'Users',
+              ),
+              NavigationDestination(
                 icon: Icon(Icons.add_circle),
                 label: 'Add',
               ),
@@ -71,6 +76,7 @@ class NavigationController extends GetxController {
     const Dashboard(),
     const Products(),
     const Suppliers(),
+    const UserManagementPage(),
     const AddItems(),
   ];
 }

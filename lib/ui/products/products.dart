@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/appbar.dart';
+import 'package:project/ui/products/addProducts.dart';
 import '../../controllers/product_controller.dart';
 
 class MyApp extends StatelessWidget {
@@ -156,11 +157,11 @@ class _ProductsPageState extends State<ProductsPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildDetailRow('Price', '\$${product['price']}'),
-                  _buildDetailRow('Quantity', '${product['stockQuantity']}'),
+                  // _buildDetailRow('Price', '\$${product['price']}'),
+                  _buildDetailRow('Quantity', '${product['quantityInStock']}'),
                   _buildDetailRow('Category', '${product['categoryId']}'),
                   _buildDetailRow('Description', '${product['description']}'),
-                  _buildDetailRow('Supplier', '${product['supplierId']}'),
+                  _buildDetailRow('supplierID', '${product['supplierID']}'),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -290,10 +291,10 @@ class _ProductsPageState extends State<ProductsPage> {
                 icon: const Icon(Icons.add),
                 label: const Text("Add Product"),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder: (context) => const AddProductPage()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddProductPage()),
+                  );
                 },
               ),
             ],
@@ -338,7 +339,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                     ),
                     subtitle: Text(
-                      'Price: \$${filteredProducts[index]['price']}\nCategory: ${filteredProducts[index]['categoryId']}',
+                      'Category: ${filteredProducts[index]['categoryId']}',
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     trailing: const Icon(Icons.arrow_forward, color: Colors.grey),

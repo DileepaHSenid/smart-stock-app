@@ -1,105 +1,94 @@
 import 'package:flutter/material.dart';
 import 'package:project/components/appbar.dart';
-import 'package:project/controllers/supplier_controller.dart';
-import 'package:project/ui/suppliers/addsupplier.dart';
+import 'package:project/controllers/user_controller.dart';
+import 'package:project/ui/Users/adduser.dart';
+import 'package:project/ui/Users/edituser.dart';
 import 'package:project/ui/suppliers/editsupplier.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Suppliers(),
-      debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class Suppliers extends StatelessWidget {
-  const Suppliers({super.key});
+class Users extends StatelessWidget {
+  const Users({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: CustomAppBar(title: 'Suppliers'),
-      body: SuppliersPage(),
+      appBar: CustomAppBar(title: 'Users'),
+      body: UserManagementPage(),
     );
   }
 }
 
-class SuppliersPage extends StatefulWidget {
-  const SuppliersPage({super.key});
+class UserManagementPage extends StatefulWidget {
+  const UserManagementPage({super.key});
 
   @override
-  _SuppliersPageState createState() => _SuppliersPageState();
+  _UserManagementPage createState() => _UserManagementPage();
 }
 
-class _SuppliersPageState extends State<SuppliersPage> {
-  List<Map<String, dynamic>> suppliers = [];
-  List<Map<String, dynamic>> filteredSuppliers = [];
+class _UserManagementPage extends State<UserManagementPage> {
+  List<Map<String, dynamic>> users = [];
+  List<Map<String, dynamic>> filteredUsers = [];
   bool isLoading = true;
-  final SuppliersController suppliersController = SuppliersController();
+  final AddUserController usersController = AddUserController(baseUrl: 'http://10.0.2.2:8080');
   final TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    fetchSuppliers();
+    fetchUsers();
   }
 
-  Future<void> fetchSuppliers() async {
+  Future<void> fetchUsers() async {
     try {
-      final fetchedSuppliers = await suppliersController.fetchSuppliers();
+      final fetchedUsers = await usersController.fetchUsers();
       setState(() {
-        suppliers = fetchedSuppliers;
-        filteredSuppliers = fetchedSuppliers;
+        users = fetchedUsers;
+        filteredUsers = fetchedUsers;
         isLoading = false;
       });
     } catch (error) {
-      print('Error fetching suppliers: $error');
+      print('Error fetching users: $error');
       setState(() {
         isLoading = false;
       });
     }
   }
 
-  void filterSuppliers(String query) {
-    final filtered = suppliers.where((supplier) {
-      final name = '${supplier['FirstName']} ${supplier['LastName']}'.toLowerCase();
+  void filterUsers(String query) {
+    final filtered = users.where((user) {
+      final name = '${user['username']}'.toLowerCase();
       return name.contains(query.toLowerCase());
     }).toList();
 
     setState(() {
-      filteredSuppliers = filtered;
+      filteredUsers = filtered;
     });
   }
 
-  Future<void> deleteSupplier(String supplierId) async {
+  Future<void> deleteUser(String userId) async {
     try {
-      final success = await suppliersController.deleteSupplier(supplierId);
+      final success = await usersController.deleteUser(userId);
       if (success) {
         setState(() {
-          suppliers.removeWhere((supplier) => supplier['id'] == supplierId);
-          filteredSuppliers.removeWhere((supplier) => supplier['id'] == supplierId);
+          users.removeWhere((user) => user['id'] == userId);
+          filteredUsers.removeWhere((user) => user['id'] == userId);
         });
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Supplier deleted successfully!')),
+          const SnackBar(content: Text('User deleted successfully!')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to delete supplier.')),
+          const SnackBar(content: Text('Failed to delete user.')),
         );
       }
     } catch (error) {
-      print('Error deleting supplier: $error');
+      print('Error deleting user: $error');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $error')),
       );
     }
   }
 
-  void _showSupplierDetails(Map<String, dynamic> supplier) {
+  void _showUserDetails(Map<String, dynamic> user) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -107,15 +96,12 @@ class _SuppliersPageState extends State<SuppliersPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: Text('${supplier['FirstName']} ${supplier['LastName']}'),
+          title: Text('${user['username']}'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDetailRow('Contact Person:', supplier['contactPerson']),
-              _buildDetailRow('Email:', supplier['email']),
-              _buildDetailRow('Phone:', supplier['phone']),
-              _buildDetailRow('Address:', supplier['address']),
+              _buildDetailRow('Role:', user['role']),
             ],
           ),
           actions: [
@@ -125,15 +111,15 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EditSupplierPage(supplier: supplier),
+                    builder: (context) => EditUserPage(user: user),
                   ),
-                ).then((updatedSupplier) {
-                  if (updatedSupplier != null) {
+                ).then((updatedUser) {
+                  if (updatedUser != null) {
                     setState(() {
-                      final index = suppliers.indexWhere((s) => s['id'] == updatedSupplier['id']);
+                      final index = users.indexWhere((s) => s['id'] == updatedUser['id']);
                       if (index != -1) {
-                        suppliers[index] = updatedSupplier;
-                        filterSuppliers(searchController.text);
+                        users[index] = updatedUser;
+                        filterUsers(searchController.text); 
                       }
                     });
                   }
@@ -144,7 +130,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _showDeleteConfirmationDialog(supplier['id']);
+                _showDeleteConfirmationDialog(user['id']);
               },
               child: const Text(
                 'Delete',
@@ -165,7 +151,7 @@ class _SuppliersPageState extends State<SuppliersPage> {
     );
   }
 
-  void _showDeleteConfirmationDialog(String supplierId) {
+  void _showDeleteConfirmationDialog(String userId) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -173,13 +159,13 @@ class _SuppliersPageState extends State<SuppliersPage> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
-          title: const Text('Delete Supplier'),
-          content: const Text('Are you sure you want to permanently delete this supplier record from the database?'),
+          title: const Text('Delete User'),
+          content: const Text('Are you sure you want to permanently delete this User?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                deleteSupplier(supplierId);
+                deleteUser(userId);
               },
               child: const Text('Yes'),
             ),
@@ -231,11 +217,11 @@ class _SuppliersPageState extends State<SuppliersPage> {
               const Spacer(),
               ElevatedButton.icon(
                 icon: const Icon(Icons.add),
-                label: const Text("Add Supplier"),
+                label: const Text("Add User"),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const AddSupplierPage()),
+                    MaterialPageRoute(builder: (context) =>  AddUserPage()),
                   );
                 },
               ),
@@ -251,14 +237,14 @@ class _SuppliersPageState extends State<SuppliersPage> {
                 borderRadius: BorderRadius.circular(30),
               ),
             ),
-            onChanged: (query) => filterSuppliers(query),
+            onChanged: (query) => filterUsers(query),
           ),
           const SizedBox(height: 16),
           isLoading
               ? const Center(child: CircularProgressIndicator())
               : Expanded(
                   child: ListView.builder(
-                    itemCount: filteredSuppliers.length,
+                    itemCount: filteredUsers.length,
                     itemBuilder: (context, index) {
                       return Card(
                         shape: RoundedRectangleBorder(
@@ -269,11 +255,10 @@ class _SuppliersPageState extends State<SuppliersPage> {
                             child: Icon(Icons.person),
                           ),
                           title: Text(
-                              '${filteredSuppliers[index]['FirstName']} ${filteredSuppliers[index]['LastName']}'),
-                          subtitle: Text('Phone: ${filteredSuppliers[index]['phone']}\n'
-                              '${filteredSuppliers[index]['email']}'),
+                              '${filteredUsers[index]['username']}'),
+                          subtitle: Text('Role: ${filteredUsers[index]['role']}'),
                           trailing: const Icon(Icons.arrow_forward),
-                          onTap: () => _showSupplierDetails(filteredSuppliers[index]),
+                          onTap: () => _showUserDetails(filteredUsers[index]),
                         ),
                       );
                     },

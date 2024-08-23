@@ -33,7 +33,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.only(left: 20.0), // Adjust the padding value as needed
+          padding: const EdgeInsets.only(left: 20.0), 
           child: IconButton(
             icon: const Icon(
               Icons.arrow_back_ios,
@@ -57,7 +57,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 2.0),
                   child: Text(
-                    'Hi, Dileepa',
+                    'Hi, Althaf',
                     style: TextStyle(
                       fontSize: 13,
                       color: Colors.black,

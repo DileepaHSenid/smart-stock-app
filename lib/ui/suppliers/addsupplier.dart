@@ -47,7 +47,6 @@ class _AddSupplierPageState extends State<AddSupplierPage> {
 
   Future<void> _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Create the supplier data map
       final supplierData = {
         'FirstName': _firstNameController.text,
         'LastName': _lastNameController.text,
@@ -57,7 +56,6 @@ class _AddSupplierPageState extends State<AddSupplierPage> {
         'address': _addressController.text,
       };
 
-      // Send the POST request
       final String apiUrl = '${ApiEndpoints.baseUrl}${ApiEndpoints.authEndpoints.postSuppliers}';
       try {
         final response = await http.post(
@@ -70,7 +68,7 @@ class _AddSupplierPageState extends State<AddSupplierPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Supplier added successfully!')),
           );
-          _clearForm(); // Clear the form after successful submission
+          _clearForm(); 
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Failed to add supplier: ${response.reasonPhrase}')),
@@ -103,7 +101,7 @@ class _AddSupplierPageState extends State<AddSupplierPage> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 2,
                     blurRadius: 5,
-                    offset: const Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), 
                   ),
                 ],
               ),
